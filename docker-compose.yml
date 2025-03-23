@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  user_grpc:
+    build: .
+    container_name: user_grpc
+    ports:
+      - "50051:50051"
+    volumes:
+      - .:/users
+    networks:
+      - fitadmin_network
+    restart: unless-stopped
+
+networks:
+  fitadmin_network:
+    external: true
