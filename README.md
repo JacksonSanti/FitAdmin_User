@@ -3,7 +3,7 @@
 ## Introdução
 
 Este projeto é um MVP (Minimum Viable Product) desenvolvido para a PUC-Rio, com o objetivo de colocar em prática os conhecimentos adquiridos no semestre atual. 
-Ele representa a terceira parte do projeto com arquitura em microserviço, após a instalação da segunda parte deve ser feita a instalação da [parte 4](https://github.com/JacksonSanti/FitAdmin_financial_grpc).
+Ele representa a terceira parte do projeto com arquitura em microserviço, após a instalação da terceira parte deve ser feita a instalação da [parte 4](https://github.com/JacksonSanti/FitAdmin_financial_grpc).
 
 ---
 
@@ -36,7 +36,7 @@ Este projeto tem como objetivo desenvolver um sistema completo que resolva esse 
 1. **Clone este repositório**
    ```bash
    git clone git@github.com:JacksonSanti/FitAdmin_user_grpc.git
-2. **Rodar o comando abaixo para instalar as dependências necessárias**
+2. **Após criar o ambiente virtual,instale as dependências necessárias**
    ```bash
    pip install -r requirements.txt
 3. **Rodar o comando abaixo para subir este container (é necessário ter o docker instalado)**
