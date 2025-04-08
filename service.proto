@@ -23,6 +23,46 @@ service AuthService {
 
 message StudentDataRequest {}
 
+message StudentUpdateRequest {
+    int32 id = 1;
+    string name = 2;
+    int32 gender_id = 3;
+    string birthday = 4;
+    string email = 5;
+    string phone = 6;
+    int32 state_id = 7;
+    string city = 8;
+    string neighborhood = 9;
+    string address = 10;
+    string number = 11;
+    string cep = 12;
+    int32 payment_id = 13;
+}
+
+message StudentUpdatePaymentIdRequest {
+    int32 student_id = 1;
+    int32 financial_id = 2;
+}
+
+message StudentCreateRequest {
+    string name = 2;
+    int32 gender_id = 3;
+    string birthday = 4;
+    string email = 5;
+    string phone = 6;
+    int32 state_id = 7;
+    string city = 8;
+    string neighborhood = 9;
+    string address = 10;
+    string number = 11;
+    string cep = 12;
+    int32 payment_id = 13;
+}
+
+message StudentSearchRequest {
+    string student_name = 1;
+}
+
 message Student {
     int32 id = 1;
     string name = 2;
@@ -35,16 +75,33 @@ message Student {
     string neighborhood = 9;
     string address = 10;
     string number = 11;
-    int32 plan_id = 12;
-    int32 payment_id = 13;
+    string cep = 12;
+    string payment_id = 13;
+}
+
+message StudentDeleteRequest {
+    int32 student_id = 1;
 }
 
 message StudentDataResponse {
     repeated Student student = 1;
 }
 
+message StudentUpdateResponse {
+    bool success = 1;
+}
+
+message StudentCreateResponse {
+    int32 id = 2;
+}
+
 service StudentService {
     rpc GetStudentData (StudentDataRequest) returns (StudentDataResponse);
+    rpc UpdateStudentData (StudentUpdateRequest) returns (StudentUpdateResponse);
+    rpc CreateStudentData (StudentCreateRequest) returns (StudentCreateResponse);
+    rpc UpdateStudentPaymentId (StudentUpdatePaymentIdRequest) returns (StudentUpdateResponse);
+    rpc DeleteStudentById (StudentDeleteRequest) returns (StudentUpdateResponse);
+    rpc GetStudentByName (StudentSearchRequest) returns (StudentDataResponse);
 }
 
 // =====================================================================
@@ -53,18 +110,23 @@ service StudentService {
 
 message StatesDataRequest {}
 
-message State {
+message StateDataRequestById {
+    int32 state_id = 1;
+}
+
+message StateResponse {
     int32 id = 1;
     string name = 2;
     string abbreviation = 3;
 }
 
-message StatesDataResponse {
-    repeated State state = 1;
+message StatesListDataResponse {
+    repeated StateResponse state = 1;
 }
 
 service StateService {
-    rpc GetStateData (StatesDataRequest) returns (StatesDataResponse);
+    rpc GetStateData (StatesDataRequest) returns (StatesListDataResponse);
+    rpc GetStateDataById (StateDataRequestById) returns (StateResponse);
 }
 
 // =====================================================================
@@ -73,15 +135,20 @@ service StateService {
 
 message GendersDataRequest{}
 
-message Gender {
+message GendersDataRequestById{
+    int32 gender_id = 1;
+}
+
+message GenderResponse {
     int32 id = 1;
     string name = 2;
 }
 
-message GendersDataResponse {
-    repeated Gender gender = 1;
+message GenderListDataResponse {
+    repeated GenderResponse gender = 1;
 }
 
 service GenderService {
-    rpc GetGenderData (GendersDataRequest) returns (GendersDataResponse);
+    rpc GetGenderData (GendersDataRequest) returns (GenderListDataResponse);
+    rpc GetGenderDataById (GendersDataRequestById) returns (GenderResponse);
 }
