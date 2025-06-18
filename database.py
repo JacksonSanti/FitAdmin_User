@@ -81,7 +81,7 @@ def get_state_by_id(conn, state_id):
     data = cursor.fetchone()
     return data
 
-def update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id):
+def update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id,nivel_id,goal_id):
 
     cursor = conn.cursor()
 
@@ -98,34 +98,39 @@ def update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,ci
         address = ?, 
         number = ?, 
         cep = ?,
-        payment_id = ? 
+        payment_id = ?,
+        nivel_id = ?,
+        goal_id = ?
     WHERE id = ?;
-    """, (name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number,cep, payment_id, id))
+    """, (name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number,cep, payment_id, nivel_id,goal_id, id))
 
     conn.commit()
 
     return True
 
-def create_student(conn, name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number, cep, payment_id):
+def create_student(conn, name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number, cep, payment_id, nivel_id, goal_id):
 
     cursor = conn.cursor()
 
     cursor.execute("""
     INSERT INTO students (
-        name, 
-        gender_id, 
-        birthday, 
-        email, 
-        phone, 
-        state_id, 
-        city, 
+        name,          
+        gender_id,    
+        birthday,      
+        email,         
+        phone,        
+        state_id,     
+        city,         
         neighborhood, 
-        address, 
-        number, 
-        cep,
-        payment_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-    """, (name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number, cep, payment_id))
+        address,       
+        number,       
+        cep,           
+        payment_id,   
+        nivel_id,
+        goal_id     
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """, (name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number, cep, payment_id, nivel_id, goal_id))
+
 
     conn.commit()
 
@@ -167,7 +172,42 @@ def get_student_by_name(conn, name):
 
     return data
 
+def get_all_nivel(conn):
 
+    cursor = conn.cursor()
 
+    cursor.execute("SELECT * FROM Nivel")
 
+    data = cursor.fetchall()
 
+    return data
+
+def get_nivel_by_id(conn, nivel_id):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM Nivel WHERE id = ?", (nivel_id,))
+
+    data = cursor.fetchone()
+
+    return data
+
+def get_all_goals(conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM Goals")
+
+    data = cursor.fetchall()
+
+    return data
+
+def get_goal_by_id(conn, goal_id):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM Goals WHERE id = ?", (goal_id,))
+
+    data = cursor.fetchone()
+
+    return data

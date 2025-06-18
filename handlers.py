@@ -46,7 +46,9 @@ class StudentService(service_pb2_grpc.StudentServiceServicer):
                 address=row[9],
                 number=row[10],
                 cep = row[11],
-                payment_id=str(row[12])
+                payment_id=str(row[12]),
+                nivel_id=str(row[13]),
+                goal_id=str(row[14])
             )
             students.append(student)
 
@@ -69,15 +71,16 @@ class StudentService(service_pb2_grpc.StudentServiceServicer):
         number = request.number
         cep = request.cep
         payment_id = request.payment_id
+        nivel_id = request.nivel_id
 
-        data = database.update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id)
+        data = database.update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id,nivel_id)
 
         conn.close()
 
         return service_pb2.StudentUpdateResponse(success=data)
     
     def CreateStudentData(self, request, context):
-
+        
         conn = sqlite3.connect(DATABASE)
 
         name = request.name
@@ -91,13 +94,19 @@ class StudentService(service_pb2_grpc.StudentServiceServicer):
         address = request.address
         number = request.number
         cep = request.cep
-        payment_id = request.payment_id
+        payment_id = request.payment_id 
+        nivel_id = request.nivel_id
+        goal_id = request.goal_id
 
-        id = database.create_student(conn, name, gender_id, birthday, email, phone, state_id, city, neighborhood, address, number, cep, payment_id)
+        id = database.create_student(
+            conn, name, gender_id, birthday, email, phone, state_id, city,
+            neighborhood, address, number, cep, payment_id, nivel_id, goal_id
+        )
 
         conn.close()
 
         return service_pb2.StudentCreateResponse(id=id)
+
     
     def UpdateStudentPaymentId(self, request, context):
 
@@ -223,5 +232,71 @@ class GenderService(service_pb2_grpc.GenderServiceServicer):
             name=data[1],
         )
         
+class NivelService(service_pb2_grpc.NivelServiceServicer):
 
+    def GetNivelData(self, request, context):
+
+        conn = sqlite3.connect(DATABASE)
+
+        data = database.get_all_nivel(conn)
+
+        conn.close()
+
+        nivels = []
+
+        for row in data:
+            nivel = service_pb2.NivelResponse(
+                id=row[0],
+                name=row[1],
+            )
+            nivels.append(nivel)
+
+        return service_pb2.NivelListDataResponse(nivel=nivels)
+    
+    def GetNivelDataById(self, request, context):
+
+        conn = sqlite3.connect(DATABASE)
+
+        nivel_id = request.nivel_id
+
+        data = database.get_nivel_by_id(conn, nivel_id)
+
+        return service_pb2.NivelResponse(
+            id=data[0],
+            name=data[1],
+        )
+
+class GoalService(service_pb2_grpc.GoalServiceServicer):
+
+    def GetGoalsData(self, request, context):
+
+        conn = sqlite3.connect(DATABASE)
+
+        data = database.get_all_goals(conn)
+
+        conn.close()
+
+        goals = []
+
+        for row in data:
+            goal = service_pb2.GoalResponse(
+                id=row[0],
+                name=row[1],
+            )
+            goals.append(goal)
+
+        return service_pb2.GoalListDataResponse(goal=goals)
+    
+    def GetGoalDataById(self, request, context):
+
+        conn = sqlite3.connect(DATABASE)
+
+        goal_id = request.goal_id
+
+        data = database.get_goal_by_id(conn, goal_id)
+
+        return service_pb2.GoalResponse(
+            id=data[0],
+            name=data[1],
+        )
 

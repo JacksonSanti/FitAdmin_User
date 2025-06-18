@@ -9,6 +9,8 @@ def serve():
     service_pb2_grpc.add_StudentServiceServicer_to_server(StudentService(), server)
     service_pb2_grpc.add_StateServiceServicer_to_server(StateService(),server)
     service_pb2_grpc.add_GenderServiceServicer_to_server(GenderService(),server)
+    service_pb2_grpc.add_NivelServiceServicer_to_server(NivelService(), server)
+    service_pb2_grpc.add_GoalServiceServicer_to_server(GoalService(),server)
     server.add_insecure_port('[::]:50051')  
     print("Servidor gRPC rodando na porta 50051...")
     server.start()
