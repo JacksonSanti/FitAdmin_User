@@ -156,8 +156,10 @@ class StudentService(service_pb2_grpc.StudentServiceServicer):
                 neighborhood=row[8],
                 address=row[9],
                 number=row[10],
-                cep = row[11],
-                payment_id=str(row[12])
+                cep=row[11],
+                payment_id=str(row[12]),
+                nivel_id=str(row[13]),
+                goal_id=str(row[14])
             )
             students.append(student)
 
