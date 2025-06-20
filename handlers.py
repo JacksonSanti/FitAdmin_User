@@ -72,8 +72,9 @@ class StudentService(service_pb2_grpc.StudentServiceServicer):
         cep = request.cep
         payment_id = request.payment_id
         nivel_id = request.nivel_id
+        goal_id = request.goal_id
 
-        data = database.update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id,nivel_id)
+        data = database.update_student_by_id(conn,id,name,gender_id,birthday,email,phone,state_id,city,neighborhood,address,number,cep,payment_id,nivel_id,goal_id)
 
         conn.close()
 
